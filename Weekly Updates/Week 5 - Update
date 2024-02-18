@@ -1,0 +1,17 @@
+Week 5 - First meeting with client
+
+
+Key Notes of the meeting
+- The client and us are on the same page for what we want from this project
+- Meetings will be around every 2 weeks
+- We will use macro models as a part of our algortihms to try to predict stock movements
+- The language used will be Python
+
+Objectives for Capstone:
+
+First Steps:
+- Creating a web scrapper for 3 financials newspaper (The Economist, Financial Times and The Wall Street Journal) to gain insight on intraday macro movements
+- Implement a CAPM (Capital Asset Model) to track expected return versus risks as our first model in our algorithm
+- Set Up the API for Interactive Brokers
+
+   
