@@ -1,0 +1,15 @@
+Currently Working on:
+- Web scrapper: Managed to create a basic web scrapper with yahoo finance to scrape articles headlines. 
+- Interactive Brokers : Researching and learning about the api and pricing to determine how to best utlize it.
+- Backtesting : Researching which platform would be best to tests our different algos and strategies.
+
+
+Hit a few roadblocks:
+- The web sites that the client wants to web scrape are behind a subscription paywall and thus we are enable to scrape them. 
+- We tried to implement a local web page to display the results of the scrapping with Flask but we're not able to show the data we were able to get on the terminal to the web page initially.
+
+What we plan to do:
+- Discuss with the client the issues about the 3 specified web sites being behind a paywall
+- Try a different approach to implement the web scrapping results on a local web page
+- Keep researching about the tools and softwares needed for our project
+- Start trying to create strategies or patterns that could be viable in order to backtests them
