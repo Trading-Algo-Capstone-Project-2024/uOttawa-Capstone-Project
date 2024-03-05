@@ -1,0 +1,29 @@
+Second meeting with client (Feb 27th):
+- Meeting went great, we are still on the same page.
+- We discussed our roadblocks and are working together to resolve them.
+- Talked about the scope of the project and how we need to make sure of what software we need to use in order to stay efficient and on time.
+
+
+What we are working on:
+- Web scrapper: 
+  - Was able to scrappe more information from yahoo finance such as the price, headlines and the content of the articles
+  - Wtih a different approach we were able to display the results of the web scrapping on a local web page
+- IBRK API
+  - Learning more about how to use the API
+- Large language models
+  - Researching how to use LLM in our project to determine if market sentiment is positive or negative based on the content of the articles
+
+Issues/Roadblocks
+- Subscription Paywall for the 3 target web sites for web scrapping:
+  - Our client (Telfer Prof) is currently waiting for funding from Telfer and will provide the subscriptions if there is no other way to web scrappe the data
+  - We will receive the news in around 2 weeks, in the meantime we will scrappe data from other sources as a workaround
+
+
+what we plan to do:
+- Improve the look and feel of the local web page since it is currently only basic HTML/CSS
+- Find a way to use a LLM to analyse the web scrapped content to determine the direction of market sentiment
+- Scrappe more useful information such as financial data, open/close prices, etc
+- Implement a search function on the local web page to dynamically search for stock tickers instead of using a static ticker in the code
+
+Ideas for future implementations (Not 100% certainty that we will add those to the project)
+- Implement stocks charts on the local web page
