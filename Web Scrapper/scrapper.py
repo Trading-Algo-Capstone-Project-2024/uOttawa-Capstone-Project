@@ -26,30 +26,28 @@ def scrape_yahoo_finance(stock_ticker):
         else:
             price = "N/A"
 
-        # Extract URLs of articles
+        # Extract headlines and content
         article_links = []
-        headlines = soup.find_all("h3", attrs={"class":"Mb(5px)"})
+        headlines = soup.find_all("h3", attrs={"class": "Mb(5px)"})
         for headline in headlines:
             link = headline.find('a')
             if link:
                 article_links.append(link['href'])
 
         # Scrape content of each article
-        articles_content = []
+        articles_data = []
         for article_link in article_links:
             article_url = f'https://finance.yahoo.com{article_link}'
             article_response = requests.get(article_url)
             if article_response.status_code == 200:
                 article_soup = BeautifulSoup(article_response.text, 'html.parser')
+                article_headline = article_soup.find('h1').get_text(strip=True)
                 article_content = article_soup.find('div', class_='caas-body').get_text()
-                articles_content.append(article_content)
+                articles_data.append((article_headline, article_content))
             else:
                 print(f"Failed to fetch article content. Status code: {article_response.status_code}")
 
-        # Combine all the articles content into a single string
-        articles_content_str = "\n\n".join(articles_content)
-
-        return price, articles_content_str
+        return price, articles_data
     else:
         print("Failed to fetch data. Status code:", response.status_code)
         return None, None
@@ -60,10 +58,13 @@ def index():
     stock_ticker = 'NVDA'
 
     # Scrape Yahoo Finance for data
-    price, articles_content = scrape_yahoo_finance(stock_ticker)
+    price, articles_data = scrape_yahoo_finance(stock_ticker)
+
+    # Preprocess articles_data to include indices
+    indexed_articles_data = [(index, article_data) for index, article_data in enumerate(articles_data)]
 
     # Render HTML template with the scraped data
-    return render_template('index.html', price=price, articles_content=articles_content)
+    return render_template('index.html', price=price, articles_data=indexed_articles_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
