@@ -1,8 +1,5 @@
-from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
-
-app = Flask(__name__)
 
 def scrape_yahoo_finance(stock_ticker):
     # Base URL of Yahoo Finance
@@ -23,8 +20,9 @@ def scrape_yahoo_finance(stock_ticker):
         price_element = soup.find("fin-streamer", attrs={"data-test": "qsp-price"})
         if price_element:
             price = price_element.text.strip()
+            print(f"Current price of {stock_ticker}: {price}")
         else:
-            price = "N/A"
+            print("Failed to fetch current price.")
 
         # Extract URLs of articles
         article_links = []
@@ -35,35 +33,18 @@ def scrape_yahoo_finance(stock_ticker):
                 article_links.append(link['href'])
 
         # Scrape content of each article
-        articles_content = []
         for article_link in article_links:
             article_url = f'https://finance.yahoo.com{article_link}'
             article_response = requests.get(article_url)
             if article_response.status_code == 200:
                 article_soup = BeautifulSoup(article_response.text, 'html.parser')
                 article_content = article_soup.find('div', class_='caas-body').get_text()
-                articles_content.append(article_content)
+                print(article_content)
             else:
                 print(f"Failed to fetch article content. Status code: {article_response.status_code}")
-
-        # Combine all the articles content into a single string
-        articles_content_str = "\n\n".join(articles_content)
-
-        return price, articles_content_str
     else:
         print("Failed to fetch data. Status code:", response.status_code)
-        return None, None
 
-@app.route('/')
-def index():
-    # Stock ticker
-    stock_ticker = 'NVDA'
-
-    # Scrape Yahoo Finance for data
-    price, articles_content = scrape_yahoo_finance(stock_ticker)
-
-    # Render HTML template with the scraped data
-    return render_template('index.html', price=price, articles_content=articles_content)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# Example usage:
+stock_ticker = 'NVDA'
+scrape_yahoo_finance(stock_ticker)
