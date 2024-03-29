@@ -1,0 +1,28 @@
+Third meeting with client (Mar 12th):
+- Informative meeting about how to approach the macroeconomic element in our algorithm
+- Discussed on how to analyze web scraped data
+- General discussion about key macroeconomic concepts (economic cycles, macro models, etc)
+
+
+What we are working on:
+- Web scrapper: 
+  - Added more infomation on an individual stock 
+  - Added more information on the sector of said stock
+  - Working on obtaining more accurate financial data
+  - Working on improving the web scraper abilities to minimize the amount of news we scrapped withonly "Read more" as the content
+- IBRK API
+  - We are more knownledgeable about the API but are putting this element on the backburner since most of the IBKR API data is paid and we want to get a good base on the other aspect of our project before paying to get real-time data
+- Large language models
+  - Considering which approach to implement (Google Collab, Chat GPT, Bard, etc)
+  - Main issue is that most of the LLM require a paid subscription to use 
+
+Issues/Roadblocks
+- Subscription Paywall for the 3 target web sites for web scrapping - Still a roadblock but of less importance since we agreed with our client that we don't need to use these source immediately
+- Finding a good way to analyse while minimzing the cost  
+
+
+What we plan to do:
+- Improve the look and feel of the local web page since it is currently only basic HTML/CSS
+- Find a way to use a LLM to analyse the web scrapped content to determine the direction of market sentiment
+- Implement charts on the local web page to provide a visual element for the stock movement
+- Find a backtesting platform and start testing strategies
