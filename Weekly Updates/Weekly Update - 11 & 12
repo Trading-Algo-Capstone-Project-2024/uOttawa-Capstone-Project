@@ -1,0 +1,35 @@
+Fourth meeting with client (Mar 26th):
+- Went into more details on how to approach the Macro concept discussed in the previous meeting:
+  -  The concepts mentionned were : Individual stock, Sector of that stock, Overall Macro 
+- From that discussion we learned about Fama/French data which is the gold standard for information about sectors
+    - Informative topics discussed:
+      - HML - book value vs entreprise value
+      - Growth/Book ratio - low book to market is a good indicator
+      - Yield curve - treasuries vs long term bonds
+      - Fama/French data on Portfolios formed on size
+      - Time length where data is still useful:
+        - Industry structure - 1 year
+        - Financial data - 6 months 
+        - News - 1 month
+
+What we are working on:
+- Web scrapper: 
+  - Working on implementing charts using Lightweight_Charts from TradingView
+  - Working on improving the accuracy of financial data even more
+- IBRK API
+  - Currently on hold until we need real-time data
+- Strategies
+  - Creating and testing strategies
+  - Backtesting strategies using TradingView
+    - We need to convert the strategies from python to pine script to test them on TradinvgView
+- Large language models
+  - Trying different ways to implement LLM to analyse news 
+
+Issues/Roadblocks
+- Subscription Paywall for the 3 target web sites for web scrapping - Still a roadblock but of less importance since we agreed with our client that we don't need to use these source immediately
+- Finding a good way to analyse market news while minimzing the cost  
+
+What we plan to do:
+- Keep improving the look and feel of the local web page 
+- WIP - Find a way to use a LLM to analyse the web scrapped content to determine the direction of market sentiment
+- Research more about how to implement macro elements in our strategies and which ones are useful to us
