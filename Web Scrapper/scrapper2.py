@@ -17,7 +17,7 @@ def scrape_yahoo_finance(stock_ticker):
         soup = BeautifulSoup(response.text, 'html.parser')
 
         # Extract the current price of the stock
-        price_element = soup.find("fin-streamer", attrs={"data-test": "qsp-price"})
+        price_element = soup.find("span", attrs={"data-reactid": "14"})
         if price_element:
             price = price_element.text.strip()
             print(f"Current price of {stock_ticker}: {price}")

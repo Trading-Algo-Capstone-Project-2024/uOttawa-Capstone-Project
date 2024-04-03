@@ -6,14 +6,11 @@
     <title>Yahoo Finance Scraped Data</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet2" href="styles.css"> -->
+
 </head>
 <body>
     <div class="container">
-        <h1>Yahoo Finance Scraped Data</h1>
-        
-        <h2>Current Price</h2>
-        <p>{{ price }}</p>
-        
         <h2>Articles</h2>
         <div id="accordion">
             {% for index, (headline, content) in articles_data %}
@@ -35,6 +32,241 @@
             {% endfor %}
         </div>
     </div>
+
+    <main>
+      <section id="symbol-info">
+				<!-- Stock Overview -->
+				<div class="tradingview-widget-container">
+					<div class="tradingview-widget-container__widget"></div>
+					<script
+						type="text/javascript"
+						src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js"
+						async
+					>	{
+						"symbol": "NASDAQ:AAPL",
+						"width": "100%",
+						"locale": "en",
+						"colorTheme": "light",
+						"isTransparent": true
+						 }
+					</script>
+				</div>
+			</section>
+
+
+      <section id="advanced-chart">Advanced Chart
+          <!-- Chart -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+            "width": "100%",
+            "height": "680",
+            "symbol": "NASDAQ:AAPL",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "enable_publishing": false,
+            "allow_symbol_change": true,
+            "calendar": false,
+            "support_host": "https://www.tradingview.com"
+          }
+            </script>
+          </div>
+      </section>
+
+      <input type="text" id="symbolInput" placeholder="Enter symbol">
+      <button onclick="changeSymbol()">Change Symbol</button>
+
+
+
+      <section id="fundamental-data">Fundamental Data
+          <!-- Financials -->
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+            {
+            "isTransparent": false,
+            "largeChartUrl": "",
+            "displayMode": "regular",
+            "width": "550",
+            "height": "680",
+            "colorTheme": "dark",
+            "symbol": "NVDA",
+            "locale": "en"
+          }
+            </script>
+          </div>
+      </section>
+      
+
+      <script>
+    function getQueryParam(param) {
+        let urlSearchParams = new URLSearchParams(window.location.search);
+        return urlSearchParams.get(param);
+    }
+    
+    function readSymbolFromQueryString() {
+        return getQueryParam('tvwidgetsymbol');
+    }
+    
+    function cloneTemplateInto(templateId, targetId, rewrites) {
+        const tmpl = document.querySelector(`#${templateId}`);
+        if (!tmpl) return;
+        const target = document.querySelector(`#${targetId}`);
+        if (!target) return;
+        target.innerText = '';
+        const clone = tmpl.content.cloneNode(true);
+        if (rewrites) {
+            const script = clone.querySelector('script');
+            script.textContent = rewrites(script.textContent);
+        }
+        target.appendChild(clone);
+    }
+    
+    function currentPage() {
+        const l = document.location;
+        if (!l) return;
+        if (l.origin && l.pathname) return l.origin + l.pathname;
+        return l.href;
+    }
+    
+    cloneTemplateInto('ticker-tape-widget-template', 'ticker-tape', function(scriptContent) {
+        const currentPageUrl = currentPage();
+        if (!currentPageUrl) return scriptContent;
+        return scriptContent.replace('"largeChartUrl": "#"', `"largeChartUrl": "${currentPageUrl}"`)
+    });
+    
+    const symbol = readSymbolFromQueryString() || 'NASDAQ:AAPL';
+    
+    function setSymbol(scriptContent) {
+        return scriptContent.replace(/"symbol": "([^"]*)"/g, () => {
+            return `"symbol": "${symbol}"`;
+        });
+    }
+    
+    cloneTemplateInto('advanced-chart-template', 'advanced-chart');
+    cloneTemplateInto('fundamental-data-template', 'fundamental-data', setSymbol);
+    cloneTemplateInto('top-stories-template', 'top-stories', setSymbol);
+    
+    if (symbol) {
+        document.title = `Stock Details - ${symbol}`;
+    }
+    
+    // function changeSymbol() {
+    //     const symbolInput = document.getElementById('symbolInput').value;
+    //     const currentUrl = window.location.href;
+    //     const baseUrl = currentUrl.split('?')[0]; // Remove existing query string
+    //     const newUrl = baseUrl + `?tvwidgetsymbol=${symbolInput}`; // Append symbol to URL
+    //     window.location.href = newUrl; // Redirect to the new URL
+    // }
+</script>
+
+      <section id="top-stories">Top Stories
+        <!-- Top Stories/Market News -->
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+          {
+          "feedMode": "all_symbols",
+          "isTransparent": false,
+          "displayMode": "regular",
+          "width": 550,
+          "height": 680,
+          "colorTheme": "dark",
+          "locale": "en"
+        }
+          </script>
+        </div>
+      </section>
+
+      <section id="heatmap">Heatmap
+        <!-- Sectors Heatmap -->
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+          {
+          "exchanges": [],
+          "dataSource": "SPX500",
+          "grouping": "sector",
+          "blockSize": "market_cap_basic",
+          "blockColor": "change",
+          "locale": "en",
+          "symbolUrl": "",
+          "colorTheme": "dark",
+          "hasTopBar": false,
+          "isDataSetEnabled": false,
+          "isZoomEnabled": true,
+          "hasSymbolTooltip": true,
+          "width": "100%",
+          "height": "1000"
+        }
+          </script>
+        </div>
+      </section>
+
+    </main>
+
+    <style>
+			:root {
+    --gap-size: 32px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif;
+    color: #000;
+  }
+
+  * {
+      box-sizing: border-box;
+  }
+
+  body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+  }
+
+  main {
+    width: 100%;
+    align-items: center;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 25px;
+
+  }
+
+
+  /* Apply Flexbox properties to each section */
+  #symbol-info,
+  #advanced-chart,
+  #heatmap {
+      display: flex;
+      flex-direction: column; 
+  }
+
+  #symbol-info,
+  #fundamental-data,
+  #top-stories,
+  #heatmap,
+  #advanced-chart {
+      margin-bottom: var(--gap-size); 
+  }
+
+  #fundamental-data,
+  #top-stories {
+      display: inline-block;
+  }
+
+  #fundamental-data{
+    padding-right: 25px;
+  }
+
+	</style>
+
 
     <!-- Bootstrap JS (optional, for collapsible functionality) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

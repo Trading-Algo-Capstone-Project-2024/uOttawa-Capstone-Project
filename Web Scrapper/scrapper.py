@@ -1,6 +1,10 @@
 from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
+import pandas_ta as ta
+import yfinance as yf
+from lightweight_charts import Chart
 
 app = Flask(__name__)
 
@@ -44,6 +48,7 @@ def scrape_yahoo_finance(stock_ticker):
                 article_headline = article_soup.find('h1').get_text(strip=True)
                 article_content = article_soup.find('div', class_='caas-body').get_text()
                 articles_data.append((article_headline, article_content))
+
             else:
                 print(f"Failed to fetch article content. Status code: {article_response.status_code}")
 
