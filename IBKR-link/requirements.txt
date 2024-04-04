@@ -1,0 +1,4 @@
+pip
+pandas
+ib_insync
+backtrader
