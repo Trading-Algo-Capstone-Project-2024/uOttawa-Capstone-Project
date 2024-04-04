@@ -62,7 +62,7 @@ with open('news_data.csv', 'a', newline='', encoding='utf-8') as csvfile:
                     article_content = "Content not available"
                 
                 # Write the headline, URL, and content to the CSV file
-                csv_writer.writerow([stock, headline, article_url, article_content])
+                csv_writer.writerow([stock, headline,article_content, article_url ])
                 
                 # Increment the counter
                 count += 1
