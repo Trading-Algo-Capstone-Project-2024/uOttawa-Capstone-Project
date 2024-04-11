@@ -11,8 +11,12 @@
 </head>
 <body>
 
+  <header>
+    <input type="search" id="symbolInput" placeholder="Search..." />
+    <button onclick="updateSymbol()">Search</button>
+  </header>
 
-    <main>
+  <main>
       <section id="symbol-info">
 				<!-- Stock Overview -->
 				<div class="tradingview-widget-container">
@@ -22,7 +26,7 @@
 						src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js"
 						async
 					>	{
-						"symbol": "NASDAQ:AAPL",
+						"symbol": "NASDAQ:NVDA",
 						"width": "100%",
 						"locale": "en",
 						"colorTheme": "light",
@@ -69,7 +73,7 @@
             {
             "width": "100%",
             "height": "680",
-            "symbol": "NASDAQ:AAPL",
+            "symbol": "NASDAQ:NVDA",
             "interval": "D",
             "timezone": "Etc/UTC",
             "theme": "dark",
@@ -108,68 +112,64 @@
           </div>
       </section>
       
-
       <script>
-    function getQueryParam(param) {
-        let urlSearchParams = new URLSearchParams(window.location.search);
-        return urlSearchParams.get(param);
-    }
-    
-    function readSymbolFromQueryString() {
-        return getQueryParam('tvwidgetsymbol');
-    }
-    
-    function cloneTemplateInto(templateId, targetId, rewrites) {
-        const tmpl = document.querySelector(`#${templateId}`);
-        if (!tmpl) return;
-        const target = document.querySelector(`#${targetId}`);
-        if (!target) return;
-        target.innerText = '';
-        const clone = tmpl.content.cloneNode(true);
-        if (rewrites) {
-            const script = clone.querySelector('script');
-            script.textContent = rewrites(script.textContent);
+
+        function getQueryParam(param) {
+            let urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get(param);
         }
-        target.appendChild(clone);
-    }
-    
-    function currentPage() {
-        const l = document.location;
-        if (!l) return;
-        if (l.origin && l.pathname) return l.origin + l.pathname;
-        return l.href;
-    }
-    
-    cloneTemplateInto('ticker-tape-widget-template', 'ticker-tape', function(scriptContent) {
-        const currentPageUrl = currentPage();
-        if (!currentPageUrl) return scriptContent;
-        return scriptContent.replace('"largeChartUrl": "#"', `"largeChartUrl": "${currentPageUrl}"`)
-    });
-    
-    const symbol = readSymbolFromQueryString() || 'NASDAQ:AAPL';
-    
-    function setSymbol(scriptContent) {
-        return scriptContent.replace(/"symbol": "([^"]*)"/g, () => {
-            return `"symbol": "${symbol}"`;
+        
+        
+        function readSymbolFromQueryString() {
+        return getQueryParam('tvwidgetsymbol');
+        }
+        
+        function cloneTemplateInto(templateId, targetId, rewrites) {
+            const tmpl = document.querySelector(`#${templateId}`);
+            if (!tmpl) return;
+            const target = document.querySelector(`#${targetId}`);
+            if (!target) return;
+            target.innerText = '';
+            const clone = tmpl.content.cloneNode(true);
+            if (rewrites) {
+                const script = clone.querySelector('script');
+                script.textContent = rewrites(script.textContent);
+            }
+            target.appendChild(clone);
+        }
+        
+        function currentPage() {
+            const l = document.location;
+            if (!l) return;
+            if (l.origin && l.pathname) return l.origin + l.pathname;
+            return l.href;
+        }
+        
+        cloneTemplateInto('ticker-tape-widget-template', 'ticker-tape', function(scriptContent) {
+            const currentPageUrl = currentPage();
+            if (!currentPageUrl) return scriptContent;
+            return scriptContent.replace('"largeChartUrl": "#"', `"largeChartUrl": "${currentPageUrl}"`)
         });
-    }
+        
+        const symbol = readSymbolFromQueryString() || 'NASDAQ:AAPL';
+        
+        function setSymbol(scriptContent) {
+            return scriptContent.replace(/"symbol": "([^"]*)"/g, () => {
+                return `"symbol": "${symbol}"`;
+            });
+        }
+        
+        cloneTemplateInto('advanced-chart-template', 'advanced-chart');
+        cloneTemplateInto('fundamental-data-template', 'fundamental-data', setSymbol);
+        cloneTemplateInto('top-stories-template', 'top-stories', setSymbol);
+        
+        if (symbol) {
+            document.title = `Stock Details - ${symbol}`;
+        }
+    </script>
     
-    cloneTemplateInto('advanced-chart-template', 'advanced-chart');
-    cloneTemplateInto('fundamental-data-template', 'fundamental-data', setSymbol);
-    cloneTemplateInto('top-stories-template', 'top-stories', setSymbol);
-    
-    if (symbol) {
-        document.title = `Stock Details - ${symbol}`;
-    }
-    
-    // function changeSymbol() {
-    //     const symbolInput = document.getElementById('symbolInput').value;
-    //     const currentUrl = window.location.href;
-    //     const baseUrl = currentUrl.split('?')[0]; // Remove existing query string
-    //     const newUrl = baseUrl + `?tvwidgetsymbol=${symbolInput}`; // Append symbol to URL
-    //     window.location.href = newUrl; // Redirect to the new URL
-    // }
-</script>
+
+ 
 
       <section id="top-stories">Top Stories
         <!-- Top Stories/Market News -->
@@ -236,6 +236,32 @@
       align-items: center;
       background: #fff;
   }
+  header{
+				display: flex;
+				width: 100%;
+        height: 50px;
+				align-items: center;
+				background: rgba(0, 0, 0, 0.05);
+				gap: 12px;
+			}
+
+			header {
+				justify-content: space-between;
+				padding: 0 var(--gap-size);
+				gap: calc(var(--gap-size) * 2);
+				box-shadow: rgba(0, 0, 0, 0.05) 0 2px 6px 0;
+				flex-direction: row;
+				z-index: 1;
+			}
+
+			header input[type='search'] {
+				padding: 10px;
+				width: 100%;
+				height: 32px;
+				max-width: 400px;
+				border: 1px solid #ccc;
+				border-radius: 20px;
+			}
 
   main {
     width: 100%;
