@@ -7,9 +7,13 @@ ib.connect('127.0.0.1', 7497, clientId=1)
 
 
 
+
+
 stock = Stock('AMD', 'SMART', 'USD')
 
-order = LimitOrder('BUY', 5, 200.00)
+#set a variable here so that I can stock the current stock price (or port it from stratagies file)
+
+order = LimitOrder('BUY', 15, 152)
 
 trade = ib.placeOrder(stock, order)
 
@@ -33,4 +37,4 @@ for order in ib.trades():
     print(trade)
     
 
-ib.run()
+# ib.run()
