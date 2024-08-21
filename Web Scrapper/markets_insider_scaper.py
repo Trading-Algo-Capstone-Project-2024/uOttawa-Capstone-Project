@@ -39,8 +39,8 @@ for page in range(1, 5):
         
         counter += 1
 
-        # Print the title safely to avoid encoding errors
-        print(title.encode('utf-8', 'replace').decode('utf-8'))
+        # # Print the title safely to avoid encoding errors
+        # print(title.encode('utf-8', 'replace').decode('utf-8'))
 
 print(f'{counter} headlines scraped from 4 pages')
 
