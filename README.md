@@ -31,7 +31,7 @@ Core Stages
             short - 1 day; medium - 1 week; long - 1 month+
     REQ: Using IBKR’s API we make calls to place orders (in paper trading)
     
-    If we run out of things to do, we might setup a user interface, although I doubt it.
+ 
 
 
 
