@@ -4,6 +4,7 @@ import pandas as pd
 import json
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 
+# Function to perform sentiment analysis using the FinBERT model
 def pipelineMethod(payload):
     tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
     model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert")
@@ -12,12 +13,14 @@ def pipelineMethod(payload):
     res = classifier(payload)
     return res[0]
 
-columns = ['datetime', 'title', 'source', 'link', 'top_sentiment', 'sentiment_score']
+# Define the columns for the DataFrame
+columns = ['datetime', 'date', 'title', 'source', 'link', 'top_sentiment', 'sentiment_score']
 data = []
 
 counter = 0
 
-for page in range(1, 5):
+# Scrape the data from the website
+for page in range(1):
     url = f'https://markets.businessinsider.com/news/nvda-stock?p={page}'
     response = requests.get(url)
     html = response.text
@@ -25,22 +28,23 @@ for page in range(1, 5):
 
     articles = soup.find_all('div', class_='latest-news__story')
     for article in articles:
-        datetime = article.find('time', class_='latest-news__date').get('datetime')
+        datetime_str = article.find('time', class_='latest-news__date').get('datetime')
+        datetime_obj = pd.to_datetime(datetime_str)  # Convert to datetime object
+        date = datetime_obj.date()  # Extract just the date
+        
         title = article.find('a', class_='news-link').text.strip()
         source = article.find('span', class_='latest-news__source').text.strip()
         link = article.find('a', class_='news-link').get('href')
 
+        # Perform sentiment analysis on the title
         output = pipelineMethod(title)
         top_sentiment = output['label']
         sentiment_score = output['score']
         
         # Collect the data in a list
-        data.append([datetime, title, source, link, top_sentiment, sentiment_score])
+        data.append([datetime_str, date, title, source, link, top_sentiment, sentiment_score])
         
         counter += 1
-
-        # # Print the title safely to avoid encoding errors
-        # print(title.encode('utf-8', 'replace').decode('utf-8'))
 
 print(f'{counter} headlines scraped from 4 pages')
 
