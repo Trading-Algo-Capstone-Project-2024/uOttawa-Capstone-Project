@@ -5,10 +5,6 @@ from ib_insync import *
 ib = IB()
 ib.connect('127.0.0.1', 7497, clientId=1)
 
-
-
-
-
 stock = Stock('AMD', 'SMART', 'USD')
 
 #set a variable here so that I can stock the current stock price (or port it from stratagies file)
@@ -37,4 +33,7 @@ for order in ib.trades():
     print(trade)
     
 
-# ib.run()
+ib.run()
+
+
+

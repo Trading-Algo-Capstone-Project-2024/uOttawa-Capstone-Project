@@ -1,15 +1,19 @@
 import numpy as np
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
+import tensorflow as tf
+#this checks if the gpu is being used for tensorflow
+# print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 # Load the dataset
-df = pd.read_csv('Machine Learning/NVDA1Y.csv')
+df = pd.read_csv('MachineLearning/NVDA1Y.csv')
 
 # Separate dates for plotting
 train_dates = pd.to_datetime(df['Date'])
@@ -47,7 +51,7 @@ model.compile(optimizer='adam', loss='mse')
 model.summary()
 
 # Fitting the model
-history = model.fit(trainX, trainY, epochs=100000, batch_size=16, validation_split=0.1, verbose=1)
+history = model.fit(trainX, trainY, epochs=1000, batch_size=16, validation_split=0.1, verbose=1)
 
 # Forecasting
 forecast_period_dates = pd.date_range(list(train_dates)[-1], periods=n_future, freq='1d').tolist()
