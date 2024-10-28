@@ -30,12 +30,12 @@ def return_rmse(test, predicted):
 
 # Test 1: Data Loading and Preprocessing
 def test_data_loading():
-    dataset = pd.read_csv("AMD5Y.csv", index_col='Date', parse_dates=['Date'])
+    dataset = pd.read_csv("../AMD5Y.csv", index_col='Date', parse_dates=['Date'])
     assert not dataset.empty, "Dataset failed to load"
     assert 'Close' in dataset.columns, "'Close' column missing from dataset"
 
 def test_data_splitting():
-    dataset = pd.read_csv("AMD5Y.csv", index_col='Date', parse_dates=['Date'])
+    dataset = pd.read_csv("../AMD5Y.csv", index_col='Date', parse_dates=['Date'])
     training_set = dataset[:'2023'].iloc[:, 3:4].values
     test_set = dataset['2024':].iloc[:, 3:4].values
     assert len(training_set) > 0, "Training set is empty"

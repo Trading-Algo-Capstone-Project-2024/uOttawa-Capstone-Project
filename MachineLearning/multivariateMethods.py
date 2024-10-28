@@ -8,7 +8,7 @@ import seaborn as sns
 import tensorflow as tf
 from matplotlib import pyplot as plt
 
-# Disable unnecessary TensorFlow logs for cleaner output
+#Disable unnecessary TensorFlow logs for cleaner output
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -20,7 +20,7 @@ def load_dataset(filepath):
     return df
 
 #Preprocess data by scaling and returning the prepared dataset for training.
-def preprocess_data(df, columns)
+def preprocess_data(df, columns):
     df_for_training = df[columns].astype(float)
     scaler = StandardScaler().fit(df_for_training)
     df_for_training_scaled = scaler.transform(df_for_training)
@@ -59,31 +59,32 @@ def make_forecast(model, trainX, scaler, n_future, forecast_dates, df_for_traini
     y_pred_future = scaler.inverse_transform(forecast_copies)[:, 0]
     return pd.DataFrame({'Date': forecast_dates, 'Open': y_pred_future})
 
+#Plot the original and forecasted data.
 def plot_forecast(original, forecast_df):
-    """Plot the original and forecasted data."""
     sns.lineplot(data=original, x='Date', y='Open', label='Original')
     sns.lineplot(data=forecast_df, x='Date', y='Open', label='Forecast')
     plt.show()
 
-# Main script
-if __name__ == "__main__":
-    # Load and preprocess data
+
+#Main script
+if __name__ == "__main__": # pragma: no cover
+    #Load and preprocess data
     df = load_dataset('MachineLearning/NVDA1Y.csv')
     df_for_training_scaled, scaler = preprocess_data(df, columns=list(df)[1:7])
 
-    # Prepare the training data
+    #Prepare the training data
     n_past, n_future = 28, 7
     trainX, trainY = prepare_training_data(df_for_training_scaled, n_past, n_future)
 
-    # Build and train the model
+    #Build and train the model
     model = build_model((trainX.shape[1], trainX.shape[2]))
     history = train_model(model, trainX, trainY)
 
-    # Forecast future values
+    #Forecast future values
     forecast_period_dates = pd.date_range(df['Date'].iloc[-1], periods=n_future, freq='1d').tolist()
     forecast_df = make_forecast(model, trainX, scaler, n_future, forecast_period_dates, df_for_training_scaled.shape)
 
-    # Plot the results
+    #Plot the results
     df['Date'] = pd.to_datetime(df['Date'])
     original = df[['Date', 'Open']].loc[df['Date'] >= '2023-08-23']
     plot_forecast(original, forecast_df)
