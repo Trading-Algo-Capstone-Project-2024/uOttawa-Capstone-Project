@@ -1,4 +1,4 @@
-# test-closeprice.py
+# test_closeprice.py
 
 import pytest
 import numpy as np

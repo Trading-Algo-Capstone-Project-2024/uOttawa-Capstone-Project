@@ -1,4 +1,4 @@
-# test-multivariate.py
+# test_multivariate.py
 
 import pytest
 import pandas as pd
