@@ -25,6 +25,10 @@ def scrape(ticker, numPages):
     
     # Scrape the data from the website
     for page in range(numPages):
+        
+        print(f"Scanning Page {page}")
+        print()
+        
         url = f'https://markets.businessinsider.com/news/{ticker}-stock?p={page}'
         response = requests.get(url)
         html = response.text
@@ -50,10 +54,10 @@ def scrape(ticker, numPages):
             
             counter += 1
 
-    print(f'{counter} headlines scraped from 4 pages')
+    print(f'{counter} headlines scraped from {numPages} pages')
 
     # Create a DataFrame and save it to CSV
     df = pd.DataFrame(data, columns=columns)
     df.to_csv(f'Web Scrapper/{ticker}sentiment.csv', index=False, encoding='utf-8')
 
-scrape('AMD',140)
+scrape('AMD',5)
