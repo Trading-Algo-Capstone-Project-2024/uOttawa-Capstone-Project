@@ -20,7 +20,7 @@ data = []
 counter = 0
 
 # Scrape the data from the website
-for page in range(1):
+for page in range(30):
     url = f'https://markets.businessinsider.com/news/nvda-stock?p={page}'
     response = requests.get(url)
     html = response.text
