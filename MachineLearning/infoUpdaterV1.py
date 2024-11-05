@@ -73,10 +73,10 @@ def updateStock(ticker="AMD", start="2023-01-01", end="2024-11-01"):
     data['HMA_50_custom'] = hull_moving_average(data['Close'], 50)
     
     # Print data to verify column addition before saving
-    print("Data before saving:\n", data[['RSI_14_custom', 'RSI_50_custom', 'HMA_10_custom', 'HMA_50_custom']].tail())
+    # print("Data before saving:\n", data[['RSI_14_custom', 'RSI_50_custom', 'HMA_10_custom', 'HMA_50_custom']].tail())
     
     # Save to CSV file
-    data.to_csv(f"MachineLearning\\Financial Data\\{ticker}Test.csv")
+    data.to_csv(f"MachineLearning\\Financial Data\\{ticker}.csv")
     
     # Plotting for visualization and testing
     # plt.figure(figsize=(14, 7))
@@ -90,4 +90,5 @@ def updateStock(ticker="AMD", start="2023-01-01", end="2024-11-01"):
     # plt.show()
 
 # # Run the update function for AAPL data as an example
-updateStock("AAPL", "2022-01-01", "2024-10-01")
+updateStock("AAPL", "2021-01-01", "2024-10-01")
+updateStock("AMD", "2021-01-01", "2024-10-01")
