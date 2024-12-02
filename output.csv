@@ -1,0 +1,2 @@
+sequence_length,forecast_horizon,hidden_size,num_layers,num_epochs,batch_size,learning_rate,training_size,skiprows,RMSE
+30,2,20,3,100,16,0.001,0.9,253,7.955429021678408

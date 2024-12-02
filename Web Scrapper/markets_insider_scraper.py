@@ -4,12 +4,15 @@ import pandas as pd
 import json
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 
+
 # Function to perform sentiment analysis using the FinBERT model
 def pipelineMethod(payload):
     tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
     model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert")
 
-    classifier = pipeline("text-classification", model=model, tokenizer=tokenizer)
+
+    # the use of device=-1 here ensures that we use our CPU instead of our GPU - installation for GPU is incomplete and leads to continuous reminder messages
+    classifier = pipeline("text-classification", model=model, tokenizer=tokenizer, device=-1)
     res = classifier(payload)
     return res[0]
 
@@ -27,7 +30,7 @@ def scrape(ticker, numPages):
     for page in range(numPages):
         
         print(f"Scanning Page {page}")
-        print()
+
         
         url = f'https://markets.businessinsider.com/news/{ticker}-stock?p={page}'
         response = requests.get(url)
@@ -60,4 +63,4 @@ def scrape(ticker, numPages):
     df = pd.DataFrame(data, columns=columns)
     df.to_csv(f'Web Scrapper/{ticker}sentiment.csv', index=False, encoding='utf-8')
 
-scrape('AMD',5)
+scrape('INTC',3)

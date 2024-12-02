@@ -4,7 +4,7 @@ import pytest
 import pandas as pd
 import numpy as np
 from tensorflow.keras.models import Sequential
-from multivariateMethods import *
+from MachineLearning.ArchivedModels.multivariateMethods import *
 import matplotlib
 matplotlib.use('Agg')
 

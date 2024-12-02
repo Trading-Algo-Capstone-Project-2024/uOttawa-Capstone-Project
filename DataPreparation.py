@@ -1,3 +1,8 @@
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+import json
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from turtle import update
 import yfinance as yf
 import pandas as pd
@@ -6,15 +11,65 @@ import numpy as np
 import pandas_market_calendars as mcal
 from datetime import datetime, timedelta
 
-'''
-
-This file calcualtes the RSI, WMA, HMA in house for the 10,14,50 day windows
-
-It is also used to update the stored information 
 
 
-'''
+# Function to perform sentiment analysis using the FinBERT model
+def pipelineMethod(payload):
+    tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
+    model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert")
 
+    classifier = pipeline("text-classification", model=model, tokenizer=tokenizer)
+    res = classifier(payload)
+    return res[0]
+
+
+
+def scrape(ticker, numPages):
+    # Define the columns for the DataFrame
+    columns = ['datetime', 'date', 'title', 'source', 'link', 'top_sentiment', 'sentiment_score']
+    data = []
+
+    counter = 0
+    
+    
+    # Scrape the data from the website
+    for page in range(numPages):
+        
+        print(f"Scanning Page {page}")
+        print()
+        
+        url = f'https://markets.businessinsider.com/news/{ticker}-stock?p={page}'
+        response = requests.get(url)
+        html = response.text
+        soup = BeautifulSoup(html, 'lxml')
+
+        articles = soup.find_all('div', class_='latest-news__story')
+        for article in articles:
+            datetime_str = article.find('time', class_='latest-news__date').get('datetime')
+            datetime_obj = pd.to_datetime(datetime_str)  # Convert to datetime object
+            date = datetime_obj.date()  # Extract just the date
+            
+            title = article.find('a', class_='news-link').text.strip()
+            source = article.find('span', class_='latest-news__source').text.strip()
+            link = article.find('a', class_='news-link').get('href')
+
+            # Perform sentiment analysis on the title
+            output = pipelineMethod(title)
+            top_sentiment = output['label']
+            sentiment_score = output['score']
+            
+            # Collect the data in a list
+            data.append([datetime_str, date, title, source, link, top_sentiment, sentiment_score])
+            
+            counter += 1
+
+    print(f'{counter} headlines scraped from {numPages} pages')
+
+    # Create a DataFrame and save it to CSV
+    df = pd.DataFrame(data, columns=columns)
+    df.to_csv(f'Web Scrapper/{ticker}sentiment.csv', index=False, encoding='utf-8')
+
+# scrape('AAPL',168)
 
 
 
@@ -123,7 +178,7 @@ def updateStock(ticker="AMD", start="2021-01-01", end=NYSE_latestDay()):
 # updateStock("AMD")
 # updateStock("NVDA")
 # updateStock("VOO")
-# updateStock("INTC")
+# I would probably want to do a VGT ETF for tech sector
 
 
 def addSentiment(ticker):
@@ -164,9 +219,4 @@ def addSentiment(ticker):
     merged_df.to_csv(f'MachineLearning/Financial Data/{ticker}/{ticker}Full.csv', index=False)
 
 
-    
-    
-    
-
-# updateStock('INTC')
-# addSentiment('INTC')
+# addSentiment('AAPL')
