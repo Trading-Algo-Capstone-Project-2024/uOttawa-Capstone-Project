@@ -1,1 +1,22 @@
+August Meeting(s) notes
+- Discussion about the general progress of the project
+- Discussion about more in depth financial concepts for portofolio management
+    - How market cap is a strong indicator of value
+    - How to calculate risk (beta, correlation, expostion level, etc)
+    - Sector based investing approach
+
+
+What we are working on:
+- Prototype for the whole project
+  -  Rough prototype for the project to see how each part work together
+  - Start focusing more on the backend stuff (ML model, news data rating)
+
+- Working on portfolio management
+  - Thresholds approach - buy and sell based on % from inital buy point
+  - Capital spread in a lot of different companies to minimize risk - similar to an ETF
+
+- ML Research
+  - Currently research on how to implement an LSTM model to our project
+  - Need to figure out how to run the model on the GPU instead of the CPU
+
 
