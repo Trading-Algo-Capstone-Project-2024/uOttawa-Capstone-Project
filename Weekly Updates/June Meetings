@@ -1,1 +1,29 @@
+June meeting(s) with the client
+- discussion about financials concept to focus our research 
+- evalutationg different softwares for data collection, backtesting, etc
+- Fewer meeting(s) this month because of travels/vacation
 
+
+What we are working on:
+
+- Web scraper
+  - Dropped the idea of implementing charts since it did not bring much useulness to the project
+  - Worked on improving the quantity of data collected
+
+- IBKR API
+  - Succeded on connected to the IBKR paper trading API
+  - Able to place orders and cancel time depending on parameters
+
+- LLM
+  - Slight modifications on how the LLM rates news articles
+
+- Web page
+  - Put on the backlog to focus on the backend elements since it was mostly for visibility purposes
+
+
+What we plan to work on:
+
+- Web scraper
+- LLM
+- ML model
+- Go from trading strategies to portfolio management
