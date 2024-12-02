@@ -1,1 +1,19 @@
+Meeting(s) for July
+- More in depth discussions about portfolio management
+- Questions about how to balance portfolio (monthly, quarterly, yearly)
+- Discussion how the working of the web scraper
 
+What we are working on:
+- ML mdoel
+  - Started trying different models/approach to see what fits our project best
+  - A lot of research done in this phase
+
+- Web scraper and LLM
+  - Changed the site where we obtain the financials articles
+  - Changed our LLM to FinBERT to approve accuracy for financial data
+  - We are now able to scrape data for the last 3 years for most stock
+
+
+What we plan to work on:
+- Research for the ML model
+- Portfolio managment
