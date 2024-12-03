@@ -1,1 +1,25 @@
+Meeting(s) with client
+- Discussion about fundeamental value of companies
+- Questions about portfolio management theory
+  - what thresholds to use
+  - Size and duration of positions
+  - How to use market sentiment with the portfolio management
+- Brainstorm about implementation of the theory to the code
 
+What we are working on:
+- Prototype for the whole project
+  -  Rough prototype for the project to see how each part work together
+  -  Start focusing more on the backend stuff (ML model, news data rating)
+
+- Working on portfolio management
+  - Thresholds approach - buy and sell based on % from inital buy point
+  - Capital spread in a lot of different companies to minimize risk - similar to an ETF
+  - Mostly focused in the S&P 500 and a portion of NASDAQ
+
+- ML Research
+  - Currently research on how to implement an LSTM model to our project
+  - Need to figure out how to run the model on the GPU instead of the CPU
+
+What we plan to work on:
+- improving data readbility
+- improving ML model
