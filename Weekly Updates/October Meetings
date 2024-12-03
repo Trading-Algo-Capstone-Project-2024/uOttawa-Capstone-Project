@@ -1,1 +1,21 @@
+Client meeting(s) notes:
+- Didnt have many meetings this month since we were focused on the QA aspect of the project
+- Discussion about what stocks/index to include in our portfolio to minimize risks without losing much profit
 
+What we are working on:
+- Quality Assurance
+  - Adding tests to the code
+    - units tests
+    - coverage testing
+    - etc
+  - Resolving bugs/issue in the code
+  - QA presentation
+
+- ML model
+  - Trying different parameters for the ML model
+  - Using an LSTM model with the financial data we collected and sentiment score
+
+
+What we plan to work on:
+- Improving portfolio management model
+- Refining ML model
