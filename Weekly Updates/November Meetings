@@ -1,1 +1,21 @@
+Meeting(s) with client:
+- demo to client 
+  - Client is satisfied with our progress and is interested in our price prediction
+- discussing future plan to keep working with him
+- question about how to adjust the data when there is no news for some days
+  - test change in value vs change how the value is calculated
 
+What we are working on
+  - Finalising the ML model
+    - We can get within 3$ of the actual price with out price prediction for AAPL
+    - Still need to work on the accuracy to make sure the ratio of success of our prediction is high enough
+
+  - Final Presentation
+    - Preping demo for presentation
+    - Final touch to the project
+
+
+Plan after Capstone project end:
+ - Keep improving the Web Scraper and the ML Model
+ - Keep expending te portfolio management implementaiton with the IBKR API
+ - Add more depth to the news sentiment score since the markets look to be more volatile next year
