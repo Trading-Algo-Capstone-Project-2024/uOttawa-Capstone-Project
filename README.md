@@ -51,6 +51,7 @@ Core Stages
 
 Student Names
 Nicholas Turbide - 300175302 - nturb007@uottawa.ca
+
 Jean-Gabriel de Montigny - 300164831 - jdemo037@uottawa.ca
 
 
